@@ -10,11 +10,6 @@ import sys
 
 nodes=[]
 points = []
-with open('dataset.csv') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=',')
-    for row in csv_reader:
-        points.append((int(row[0]),int(row[1])))
-
 def dist(a, b):
     return math.dist(a,b)
     
@@ -24,7 +19,7 @@ class Node:
         self.cluster = -1
         self.dimensions = len(self.point)
 
-    def getItems(self,r, tree):
+    def getItems(self,r, tree, nodes):
         temp = []
         data = tree.query_ball_point(self.point,r)
         # print(data)
@@ -75,10 +70,14 @@ class Cluster:
             return False
         return True
 
-def DBSCAN():
+def DBSCAN(filename):
+    with open('filename') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            points.append((int(row[0]),int(row[1])))
+
     for point in points: 
         nodes.append(Node(point))
-
 
     tree =spatial.KDTree(points)
 
