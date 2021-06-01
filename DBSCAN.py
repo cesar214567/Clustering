@@ -24,8 +24,7 @@ class Node:
         self.cluster = -1
         self.dimensions = len(self.point)
 
-    def getItems(self,r):
-        global tree
+    def getItems(self,r, tree):
         temp = []
         data = tree.query_ball_point(self.point,r)
         # print(data)
@@ -42,8 +41,7 @@ class Cluster:
         self.r = r
         self.itemCount = 0
 
-    def build_cluster(self,node):
-        global tree
+    def build_cluster(self,node, tree):
         self.items.append(node)
         self.itemCount += 1
         node.cluster = self.number
@@ -52,7 +50,7 @@ class Cluster:
             self.items.pop(0)
             self.items2.append(node_temp)
             #print(node_temp.point)
-            neighbours = node_temp.getItems(self.r)
+            neighbours = node_temp.getItems(self.r, tree)
             for neigh in neighbours:
                 if neigh.cluster == -1:
                     # print("HERE - ", neigh.point)
@@ -67,8 +65,8 @@ class Cluster:
         #print(len(self.items2))
         return self.itemCount >= 25
 
-    def define(self, node):
-        self.build_cluster(node)
+    def define(self, node, tree):
+        self.build_cluster(node, tree)
         if(not self.isValid()):
             for i in range(len(self.items2)):
                 self.items2[i].cluster = -1
@@ -77,37 +75,37 @@ class Cluster:
             return False
         return True
 
+def DBSCAN():
+    for point in points: 
+        nodes.append(Node(point))
 
-for point in points: 
-    nodes.append(Node(point))
 
+    tree =spatial.KDTree(points)
 
-tree =spatial.KDTree(points)
+    clusters = []
+    size = len(nodes)
 
-clusters = []
-size = len(nodes)
+    r = 1 
 
-r = 1 
+    cluster_num = 0
+    for node in nodes:
+        if node.cluster == -1:
+            new_cluster = Cluster(cluster_num)
+            if(new_cluster.define(node, tree)):
+                clusters.append(new_cluster)
+                cluster_num += 1
+            #else:
+                #print(new_cluster.items2)
+    #print("asdas: ")
 
-cluster_num = 0
-for node in nodes:
-    if node.cluster == -1:
-        new_cluster = Cluster(cluster_num)
-        if(new_cluster.define(node)):
-            clusters.append(new_cluster)
-            cluster_num += 1
-        #else:
-            #print(new_cluster.items2)
-#print("asdas: ")
-
-for temp in clusters:
-    
-    x=[]
-    y=[]
-    print(temp.itemCount)
-    for item in temp.items2:
-        x.append(item.point[0])
-        y.append(item.point[1])
-    plt.plot(x,y,'*')
-plt.show()
-print("cluster_num: " + str(cluster_num))
+    for temp in clusters:
+        
+        x=[]
+        y=[]
+        print(temp.itemCount)
+        for item in temp.items2:
+            x.append(item.point[0])
+            y.append(item.point[1])
+        plt.plot(x,y,'*')
+    plt.show()
+    print("cluster_num: " + str(cluster_num))
