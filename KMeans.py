@@ -30,10 +30,8 @@ class Cluster:
 def dist(a, b):
     return math.dist(a,b)
 
-def KMeans():
+def KMeans(pix_val):
     nodes=[]
-    im = Image.open('images.png', 'r')
-    pix_val=list(im.getdata())
     for item in pix_val:
         nodes.append(Node(item))
 

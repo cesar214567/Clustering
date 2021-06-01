@@ -5,6 +5,7 @@ from PIL import Image
 import random
 from scipy import spatial
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 import csv 
 import sys
 
@@ -19,7 +20,8 @@ class Node:
         self.cluster = -1
         self.dimensions = len(self.point)
 
-    def getItems(self,r, tree, nodes):
+    def getItems(self,r, tree):
+        global nodes
         temp = []
         data = tree.query_ball_point(self.point,r)
         # print(data)
@@ -29,7 +31,7 @@ class Node:
         return temp
 
 class Cluster:
-    def __init__(self,x,r=1):
+    def __init__(self,x,r=5):
         self.number = x
         self.items = []
         self.items2 = []
@@ -56,8 +58,6 @@ class Cluster:
         
 
     def isValid(self):
-        #print(self.itemCount)
-        #print(len(self.items2))
         return self.itemCount >= 25
 
     def define(self, node, tree):
@@ -70,12 +70,7 @@ class Cluster:
             return False
         return True
 
-def DBSCAN(filename):
-    with open('filename') as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        for row in csv_reader:
-            points.append((int(row[0]),int(row[1])))
-
+def DBSCAN(points):
     for point in points: 
         nodes.append(Node(point))
 

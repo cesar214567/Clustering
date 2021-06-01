@@ -45,10 +45,8 @@ class Cluster:
             self.getItems(tree,nodes)
             self.moveCenter()
         print(self.point)
-def MeanShift():
+def MeanShift(pix_val):
     nodes=[]
-    im = Image.open('images.png', 'r')
-    pix_val=list(im.getdata())
     tree =spatial.KDTree(pix_val)
 
     for item in pix_val:
@@ -59,6 +57,7 @@ def MeanShift():
     K = 3
     r = 20 
     for i in range(K):
+        #clusters.append(Cluster(nodes[random.randint(0,size)].point,r))
         clusters.append(Cluster(nodes[random.randint(size*i/K,size*(i+1)/K)].point,r))
 
     for cluster in clusters:
