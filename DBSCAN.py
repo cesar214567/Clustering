@@ -31,7 +31,7 @@ class Node:
         return temp
 
 class Cluster:
-    def __init__(self,x,r=5):
+    def __init__(self,x,r=4):
         self.number = x
         self.items = []
         self.items2 = []

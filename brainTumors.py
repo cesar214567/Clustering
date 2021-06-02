@@ -15,15 +15,16 @@ def read_db():
         #pix_val = im.convert("RGB")
         #pix_val=list([] im.getdata())
         pix_val = np.array(im)
-        for y in range(len(pix_val)):
-            for x in range(len(pix_val[0])):
-                points.append((x, y, pix_val[y][x]))
+        h,w = len(pix_val),len(pix_val[0])
+        for y in range(h):
+            for x in range(w):
+                points.append((x*2.5, y*2.5, pix_val[y][x]/2))
         print("----------------DBSCAN---------------")
         DBSCAN(points)
-        print("----------------KMeans---------------")
-        KMeans(points)
-        print("--------------Mean Shift-------------")
-        MeanShift(pix_val)
+        #print("----------------KMeans---------------")
+        #KMeans(points,w,h)
+        #print("--------------Mean Shift-------------")
+        #MeanShift(pix_val)
         break
 
 read_db()
