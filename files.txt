@@ -1,6 +1,4 @@
 db/Y38.jpg
-db/Y6.jpg
-db/Y108.jpg
 db/Y20.jpg
 db/Y74.jpg
 db/Y89.JPG
@@ -152,3 +150,5 @@ db/Y195.JPG
 db/Y55.jpg
 db/Y96.jpg
 db/Y23.JPG
+db/Y6.jpg
+db/Y108.jpg

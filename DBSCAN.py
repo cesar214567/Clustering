@@ -58,7 +58,7 @@ class Cluster:
         
 
     def isValid(self):
-        return self.itemCount >= 25
+        return self.itemCount >= 50
 
     def define(self, node, tree):
         self.build_cluster(node, tree)
@@ -70,16 +70,18 @@ class Cluster:
             return False
         return True
 
-def DBSCAN(points):
+def DBSCAN(points, name):
+
     for point in points: 
         nodes.append(Node(point))
-
+    print("Info", len(points), len(points[0]), points[0])
+    tree=[]
     tree =spatial.KDTree(points)
 
     clusters = []
     size = len(nodes)
 
-    r = 1 
+    r = 1
 
     cluster_num = 0
     for node in nodes:
@@ -92,14 +94,16 @@ def DBSCAN(points):
                 #print(new_cluster.items2)
     #print("asdas: ")
 
-    for temp in clusters:
-        
+    for temp in clusters:     
         x=[]
         y=[]
-        print(temp.itemCount)
+        # print(temp.itemCount)
         for item in temp.items2:
             x.append(item.point[0])
             y.append(item.point[1])
         plt.plot(x,y,'*')
+        
     plt.show()
+    #plt.savefig("DBS_IMG_"+str(name))
+    plt.clf()
     print("cluster_num: " + str(cluster_num))
